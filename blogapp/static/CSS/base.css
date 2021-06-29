@@ -1,0 +1,166 @@
+/**
+ * Variables
+ */
+/**
+ * Functions
+ */
+/**
+ * Placeholders
+ */
+ .mobile_cart_indicator {
+  position:absolute; 
+  right:3rem; 
+  top:0rem; 
+  margin:auto; 
+  text-transform:uppercase; 
+  cursor:pointer;
+  
+}
+ 
+ 
+.c-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Styles
+ */
+ #homebody {
+  background: url("../IMAGE/aboutbackground.jpg");
+  background-attachment: fixed;
+}
+
+
+
+
+/**
+ * Menu
+ */
+
+#page {
+	width:52rem;
+/*	background-color:powderblue; */
+}
+.c-menu__list {
+  display: -webkit-box;
+  display: flex;
+  
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-menu__link {
+  color: #545454;
+  display: block;
+  letter-spacing: 0.4375rem;
+  margin-left: 1.25rem;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.08rem;
+}
+
+/**
+ * Footer
+ */
+.c-footer {
+  bottom: 9.1875rem;
+  left: 50%;
+  position: fixed;
+  text-align: center;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+/**
+ * Email
+ */
+.c-email {
+  color: white;
+  display: block;
+  font-size: 1.625rem;
+  padding: 1.25rem;
+  text-decoration: none;
+}
+
+
+/**
+ * Cursor
+ */
+.c-cursor {
+  pointer-events: none;
+}
+html:not(.is-desktop) .c-cursor {
+  display: none;
+}
+
+.c-cursor__pointer {
+  height: 0.875rem;
+  left: -0.4375rem;
+  opacity: 0;
+  position: fixed;
+  top: -0.4375rem;
+  width: 0.875rem;
+  z-index: 9;
+}
+.c-cursor__pointer::before {
+  background-color: #f46c70;
+  border-radius: 50%;
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width: 100%;
+}
+.is-hover .c-cursor__pointer::before {
+  opacity: 0.3;
+  -webkit-transform: scale(3.5);
+          transform: scale(3.5);
+}
+
+.c-magnetic span {
+  display: inline-block;
+  pointer-events: none;
+}
+
+
+/* Ford Dropdown Menu */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+  top:3.2em;
+  display: block;
+  background-color: #dee5ed;
+  opacity: 0.9;
+  border-radius: 40px;
+
+}
+
+
+
+
+
+
+#languageform {
+	position:absolute; 
+	right:0;
+	top:0;
+}
+
+/* From a maximum width of 1150px and smaller 
+@media screen and (max-width: 1150px) {
+	#languageform {
+		left:0;
+	}
+}
+*/

@@ -1,0 +1,160 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-12 08:46+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\blogapp\templates\authors.html:54 .\blogapp\templates\blog_menu.html:79
+msgid "Update"
+msgstr "Güncelle"
+
+#: .\blogapp\templates\authors.html:55 .\blogapp\templates\blog_menu.html:80
+msgid "Update Cover"
+msgstr "Kapak Fotosu"
+
+#: .\blogapp\templates\authors.html:56 .\blogapp\templates\blog_menu.html:81
+msgid "Delete"
+msgstr "Sil"
+
+#: .\blogapp\templates\base.html:48 .\blogapp\templates\base.html:107
+msgid "Contact"
+msgstr "İletişim"
+
+#: .\blogapp\templates\base.html:51
+msgid "About"
+msgstr "Hakkında"
+
+#: .\blogapp\templates\base.html:54
+msgid "Authors"
+msgstr "Yazarlar"
+
+#: .\blogapp\templates\base.html:58
+msgid "User"
+msgstr "Kullanıcı"
+
+#: .\blogapp\templates\base.html:60 .\blogapp\templates\base.html:111
+#: .\register\templates\register\register.html:23
+#: .\register\templates\register\register.html:55
+msgid "Register"
+msgstr "Kayıt"
+
+#: .\blogapp\templates\base.html:62 .\blogapp\templates\base.html:114
+#: .\register\templates\registration\login.html:17
+msgid "Login"
+msgstr "Giriş"
+
+#: .\blogapp\templates\base.html:65 .\blogapp\templates\base.html:119
+msgid "Account"
+msgstr "Hesap"
+
+#: .\blogapp\templates\base.html:66 .\blogapp\templates\base.html:122
+msgid "Logout"
+msgstr "Çıkış"
+
+#: .\blogapp\templates\base.html:74 .\blogapp\templates\base.html:133
+msgid "Add Blog"
+msgstr "Blog Ekle"
+
+#: .\blogapp\templates\blog.html:71 .\blogapp\templates\blog.html:104
+msgid "Send"
+msgstr "Gönder"
+
+#: .\blogapp\templates\blog_menu.html:17
+msgid "Basic, simple, clear, easy, readable, explicit, better."
+msgstr "Temel, basit, açık, kolay, okunabilir, kesin, daha iyisi"
+
+#: .\blogapp\templates\blog_menu.html:20
+msgid "Sign up"
+msgstr "Kayıt ol"
+
+#: .\blogapp\templates\blog_menu.html:21
+msgid "Sign in"
+msgstr "Giriş yap"
+
+#: .\blogapp\templates\contact.html:24
+msgid "Your name"
+msgstr "İsim"
+
+#: .\blogapp\templates\contact.html:30
+msgid "Your e-mail"
+msgstr "Mail Adresi"
+
+#: .\blogapp\templates\contact.html:36
+msgid "Your message"
+msgstr "Mesaj"
+
+#: .\blogapp\templates\contact.html:42
+msgid "Your File"
+msgstr "Dosya"
+
+#: .\blogapp\templates\contact.html:46
+msgid "Send your message!"
+msgstr "Mesajı gönder!"
+
+#: .\myproject\settings.py:200
+msgid "English"
+msgstr "İngilizce"
+
+#: .\myproject\settings.py:204
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: .\myproject\urls.py:29
+msgid "admin/"
+msgstr "yönetici"
+
+#: .\register\templates\accounts\change_password.html:33
+msgid "Save changes"
+msgstr "Değişiklikleri Kaydet"
+
+#: .\register\templates\accounts\change_password.html:39
+msgid "Welcome"
+msgstr "Hoşgeldiniz"
+
+#: .\register\templates\accounts\profile.html:31
+msgid "Save"
+msgstr "Kaydet"
+
+#: .\register\templates\register\register.html:27
+#: .\register\templates\registration\login.html:21
+msgid "Username"
+msgstr "Kullanıcı"
+
+#: .\register\templates\register\register.html:31
+msgid "Name"
+msgstr "İsim"
+
+#: .\register\templates\register\register.html:35
+msgid "Surname"
+msgstr "Soy isim"
+
+#: .\register\templates\register\register.html:43
+#: .\register\templates\registration\login.html:25
+msgid "Password"
+msgstr "Şifre"
+
+#: .\register\templates\register\register.html:47
+msgid "Confirm"
+msgstr "Şifre onay"
+
+#: .\register\templates\register\register.html:52
+msgid "Blogger"
+msgstr "Blog Yazarı"
+
+#: .\register\templates\registration\login.html:28
+msgid "Let Me In"
+msgstr "Giriş"

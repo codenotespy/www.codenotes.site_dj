@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Login Here{% endblock %}
+
+
+	{% block link %}
+	<link rel="stylesheet" href="{% static 'CSS/registration/login.css' %}">
+	{% endblock %}
+
+
+{% block content %}
+
+{% if form.errors %}
+    <p 	style="border:1px solid gray; border-radius:15px; background-color: #ff878a; width:200px; top:100px; left:100px; position:fixed; z-index:2; padding:12px;">Please check your username & password.</p>
+{% endif %}
+
+<body class="logincontainer">
+<div class="box">
+	<form method='POST' class='form-group'>
+		{% csrf_token %}
+
+		<h2>{% trans "Login" %}</h2>
+
+			<div class="inputBox">
+				{{ form.username }}
+				<label for="">{% trans "Username" %}</label>
+			</div>
+			<div class="inputBox">
+				{{ form.password }}
+				<label for="">{% trans "Password" %}</label>
+			</div>
+
+			<input type="submit" name="" value="{% trans 'Let Me In' %}">
+		<br><br>
+		
+		{% get_current_language as LANGUAGE_CODE %}
+		{% if LANGUAGE_CODE == 'en' %}
+		<p style="color:white">Don't have an account? Create one<a href='/register'> HERE</a>. Thank you!</p>
+		{% else %}
+		<p style="color:white">Hesabınız yok mu? <a href='/register'> BURADAN</a> oluşturabilirsiniz. Teşekkürler!</p>
+		{% endif %}
+		
+	</form>
+</div>
+</body>
+{% endblock %}

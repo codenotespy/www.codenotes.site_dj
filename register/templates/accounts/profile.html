@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+  {% block link %}
+	<style>
+		.updateform {
+			text-align:center;
+			margin: 2em 0 0 0;
+		}
+		
+		@media (max-width: 1150px) {
+			.updateform {
+				margin: 7em 0 0 0;
+			}
+		}
+	</style>
+  {% endblock %}
+
+
+
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<body style="background-color:lightgray;">
+  <form class="updateform" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" >{% trans "Save" %}</button>
+  </form>
+
+	{% get_current_language as LANGUAGE_CODE %}
+	{% if LANGUAGE_CODE == 'en' %}
+	<p style="text-align:center;">You can change your password <a href="/password">HERE</a></p>
+	<p style="text-align:center;">You can change your biography <a href="/bio_update">HERE</a></p>
+	{% else %}
+	<p style="text-align:center;">Şifrenizi <a href="/password">BURADAN</a> değiştirebilirsiniz.</p>
+	<p style="text-align:center;">Biografinizi <a href="/bio_update">BURADAN</a> değiştirebilirsiniz.</p>
+	{% endif %}
+
+
+{% else %}
+    <h1>{% trans "Welcome</h1>
+	
+	{% get_current_language as LANGUAGE_CODE %}
+	{% if LANGUAGE_CODE == 'en' %}
+    <h2>Please login <a href="/login/">HERE</a>. Thank you!</h2>
+	{% else %}
+	<h2>Lütfen <a href="/login/">BURADAN</a> giriş yapınız. Teşekkürler!</h2>
+	{% endif %}
+{% endif %}
+
+<body>
+
+
+
+
+
+
+
+
+
+{% endblock %}

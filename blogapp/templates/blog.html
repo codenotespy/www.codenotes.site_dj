@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% load crispy_forms_tags %}
+
+
+  {% block link %}
+	<link rel="stylesheet" href="{% static 'CSS/blog.css' %}">
+  {% endblock %}
+
+
+
+{% block content %}
+
+
+<body id="firstbody2">
+
+<div class="letterdiv">
+
+	<div style="margin:0; ">
+	<i class="fa fa-eye" aria-hidden="true"></i> <span class="letterp">{{ ls.visit_num }}</span>&nbsp;&nbsp;&nbsp;
+    <i class="fa fa-comments" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ ls.chat_set.count }}</span>&nbsp;&nbsp;&nbsp;
+	<a href="{% url 'blog_like' ls.id %}" style="text-decoration:none;">
+	<i class="fa fa-heart" style="color:red;" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ ls.like_num }}</span>
+	</a>
+	<br style="">
+	<i class="fa fa-user" aria-hidden="true" style="font-size:13;"></i>&nbsp;<span class="letterp" style="font-size:13;">{{ ls.user.get_full_name }}</span>
+	
+	{% if request.user.is_superuser == True %}
+		<form class="" action="{% url 'priorityform' ls.id %}" method="post" enctype="multipart/form-data" style="position:absolute; margin:0; left:0">
+			{% csrf_token %}
+			<!-- 
+			{{ priority_form|crispy }}
+			-->
+			<label>Priority:</label><br>
+			<input name="priorityinput" type="number" min="0.0" max="{{ blog_count }}" value="{{ ls.priority }}"/>
+			<span style="font-weight:bold;"> / {{ blog_count }}</span>
+			<button type="submit" value="Submit">Ok</button>
+		</form>
+	{% endif %}
+	</div>
+
+	{% for blog in bloglist %}
+		<h2 class="letterhead">{{ blog.title }}</h2>
+		<div class="letterp">{{ blog.letter | safe }}</div>
+	{% endfor %}
+
+	<div style="margin:0; ">
+	<i class="fa fa-eye" aria-hidden="true"></i> <span class="letterp">{{ ls.visit_num }}</span>&nbsp;&nbsp;&nbsp;
+    <i class="fa fa-comments" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ ls.chat_set.count }}</span>&nbsp;&nbsp;&nbsp;
+	<a href="{% url 'blog_like' ls.id %}" style="text-decoration:none;">
+	<i class="fa fa-heart" style="color:red;" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ ls.like_num }}</span>
+	</a>
+	<br style="">
+	<i class="fa fa-user" aria-hidden="true" style="font-size:13;"></i>&nbsp;<span class="letterp" style="font-size:13;">{{ ls.user.get_full_name }} {{ ls.obj_count }}</span>
+	</div>
+	
+	<blockquote class="chat_desktop">
+
+	{% for blog_chat in ls.chat_set.all %}
+		<div class="user">
+			<p class="username">{{ blog_chat.user }}</p>
+			<p class="userchat">{{ blog_chat.comment }}</p>
+			<p class="chattime">{{ blog_chat.time }}</p>
+		</div>
+	{% endfor %}
+
+	{% if user.is_authenticated %}
+		<form method="post" action="{% url 'blog' ls.id %}" enctype="multipart/form-data" style="">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<button type="submit" style="float:right; margin:1em;">{% trans "Send" %}</button>
+		</form>
+	{% else %}
+	
+		<div style="float:left; margin:1em 0 2em 0;">
+		{% get_current_language as LANGUAGE_CODE %}
+		{% if LANGUAGE_CODE == 'en' %}
+		<p>Please sign in <a href="{% url 'login' %}" style="text-decoration:none; font-weight: bold;">HERE</a> to comment. Thank you!</p>
+		{% else %}
+		<p>Yorum yapmak isterseniz lütfen <a href="{% url 'login' %}" style="text-decoration:none; font-weight: bold;">BURADAN</a> giriş yapınız. Teşekkürler!</p>
+		{% endif %}
+	{% endif %}
+	</div>
+	</blockquote>
+
+</div>
+
+
+
+
+	<blockquote class="chat_mobile">
+	{% for blog_chat in ls.chat_set.all %}
+		<div class="user">
+			<p class="username">{{ blog_chat.user }}</p>
+			<p class="userchat">{{ blog_chat.comment }}</p>
+			<p class="chattime">{{ blog_chat.time }}</p>
+		</div>
+	{% endfor %}
+
+	{% if user.is_authenticated %}
+		<form method="post" enctype="multipart/form-data" style="">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<button type="submit" style="float:right; margin:1em;">{% trans "Send" %}</button>
+		</form>
+	{% else %}
+		<div style="float:left; margin:1em 0 2em 0;">
+		{% get_current_language as LANGUAGE_CODE %}
+		{% if LANGUAGE_CODE == 'en' %}
+		<p>Please sign in <a href="{% url 'login' %}" style="text-decoration:none; font-weight: bold;">HERE</a> to comment. Thank you!</p>
+		{% else %}
+		<p>Yorum yapmak isterseniz lütfen <a href="{% url 'login' %}" style="text-decoration:none; font-weight: bold;">BURADAN</a> giriş yapınız. Teşekkürler!</p>
+		{% endif %}
+	{% endif %}
+	<div>
+	</blockquote>
+
+</body>
+
+{% endblock %}

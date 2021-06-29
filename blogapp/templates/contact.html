@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'CSS/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="contactbody">
+<!-- partial:index.partial.html -->
+<header class="contactheader"> </header>
+
+<div id="form">
+
+	<div class="fish" id="fish"></div>
+	<div class="fish" id="fish2"></div>
+
+	<form action="/contact" class="contactform" id="waterform" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+		<div class="formgroup" id="name-form">
+			<label class="contactlabel" for="name">{% trans "Your name" %}*</label>
+			<!-- <input class="contactinput" type="text" id="name" name="name" /> -->
+			{{ form.name }}
+		</div>
+
+		<div class="formgroup" id="email-form">
+			<label class="contactlabel" for="email">{% trans "Your e-mail" %}*</label>
+			<!-- <input class="contactinput" type="email" id="email" name="email" /> -->
+			{{ form.email }}
+		</div>
+
+		<div class="formgroup" id="message-form">
+			<label class="contactlabel" for="message">{% trans "Your message" %}*</label>
+			<!-- <textarea class="contacttextarea" id="message" name="message"></textarea> -->
+			{{ form.text }}
+		</div>
+
+		<div class="formgroup" id="file-form">
+			<label class="contactlabel" for="file">{% trans "Your File" %}</label>
+			{{ form.file }}
+		</div>
+
+			<input class="contactinput" type="submit" value="{% trans 'Send your message!' %}" />
+	</form>
+
+</div>
+
+
+</div>
+
+
+
+    {% block script %}
+
+    {% endblock %}
+
+
+{% endblock %}

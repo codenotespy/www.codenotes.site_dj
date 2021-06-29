@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+  {% block link %}
+	<link rel="stylesheet" href="{% static 'CSS/blog_menu.css' %}">
+  {% endblock %}
+ 
+
+
+
+{% block content %}
+<body>
+
+<style>
+.authorpic {
+	max-width:150px; 
+	max-height:180px; 
+	margin:5% 0 0 5%;
+}
+
+.authorpar {
+	position:absolute; 
+	top:55px; 
+	left:35%; 
+	font-size: large; 
+	color:#14b9ce;
+}
+
+.grid-item:nth-child(odd) .authorpic {
+	margin:5% 0 0 71%;
+}
+
+.grid-item:nth-child(odd) .authorpar {
+	left:10%;
+}
+
+@media (max-width:1100px) {
+	.grid-item:nth-child(odd) .authorpic {
+	margin:10% 0 0 65%;
+	}
+	.authorpic {
+		margin:10% 0 0 2%;
+	}
+	.grid-item:nth-child(odd) .authorpic {
+		margin:5% 0 0 57%;
+	}
+	.grid-item:nth-child(odd) .authorpar {
+		left:5%;
+	}
+	.authorpar {
+		width:55%;
+		left:45%; 
+	}
+}
+
+
+
+
+</style>
+
+<div class="grid-container">
+
+{% for author in authors %}
+	<div class="grid-item" style="background-color:#e5e8ff; cursor:pointer; grid-row: span 2;" onclick="window.location='{% url 'bioforuser' author.id %}';">
+		<img class="authorpic" src="{{author.profile.profilepicture.url}}">
+		<p class="authorpar">
+		NAME: <span style="color:#5a26f9;">{{author.get_full_name}}</span><br><br>  
+		TITLE: <span style="color:#5a26f9;">{{author.profile.title}}</span><br><br>
+		NUMBER OF ARTICLE: <span style="color:#5a26f9;">{{author.total_posts}}</span><br><br>
+		<br>
+	</p>
+		<img src="" max-width:100px;>
+	</div>
+{% endfor %}
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+{% endblock %}

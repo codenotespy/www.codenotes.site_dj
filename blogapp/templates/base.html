@@ -1,0 +1,191 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>CODENOTES</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="keywords" content="code, note, python, django, scrapy, tutorial, program, css, html, javascript, ajax, sql, mysql, java, module, framework, application, web, website, site, how to, best, tutorial, solution, mobile, desktop, basic, simple, clear, easy, readable, explicit, better, app/web, tutorials"/>
+  <meta name="description" content="CodeNotes Officail website. Basic, simple, clear, easy, readable, explicit, better app/web tutorials."/>
+  <link rel="shortcut icon" href="{% static 'IMAGE/favicon.ico' %}"/>
+  <link rel="stylesheet" href="{% static 'CSS/base.css' %}">
+  <link rel="stylesheet" href="{% static 'CSS/mobile_nav.css' %}">
+
+<link rel="stylesheet" href="{% static 'CSS/navigationN.css' %}">
+
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/> <!-- https://fontawesome.com/ -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+  {% block link %}
+  {% endblock %}
+  
+  <title>{% block title %}CodeNotes{% endblock %}</title>
+</head>
+
+
+
+<!-- style="background-color:lightgray;" -->
+<body id="homebody">
+
+
+
+
+
+<!--  LANGUAGE SELECTOR -->
+<form id="languageform" action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <select name="language" onchange="this.form.submit()" style="background:#eff0f5;">
+        <option value="" selected>
+        {% get_current_language as LANGUAGE_CODE %}
+        {{ LANGUAGE_CODE }} <span>&check;</span>
+        </option>
+
+        {% get_available_languages as LANGUAGES %}
+        {% for language in LANGUAGES %}
+        <option value="{{ language.0 }}">
+            {{ language.0 }}
+        </option>
+        {% endfor %}
+    </select>
+</form>
+
+
+<style>
+	.alert-error {
+		border:1px solid gray;
+		border-radius:15px;
+		background-color: #ff878a;
+		width:200px;
+		top:100px;
+		left:100px;
+		position:fixed;
+		z-index:2;
+		padding:12px;
+	}
+
+	.alert-info {
+		border:1px solid gray;
+		border-radius:15px;
+		background-color: #bbf1bb;
+		width:172px;
+		top:100px;
+		left:100px;
+		position:fixed;
+		z-index:2;
+		padding:12px;
+	}
+</style>
+{% if messages %}
+
+        {% for message in messages %}
+        <!-- -->
+		<div {% if message.tags %} class="alert-{{ message.tags }} {% endif %}" role="alert"> 
+        	{{ message }}
+		<!--
+    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        	<span aria-hidden="true">&times;</span>
+      	</button>
+		-->
+        </div>
+        {% endfor %}
+
+{% endif %}
+<script>
+	const errmessage = document.querySelector('.alert-error')
+	const infomessage = document.querySelector('.alert-info')
+	setTimeout(function() {
+		infomessage.style.display = 'none';
+	}, 3000);
+	setTimeout(function() {
+		errmessage.style.display = 'none';
+	}, 2500);
+</script>
+
+
+
+
+    {% block content %}
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+<button class="navbar-toggler hidden" id="navbtn" type='button'>
+    <i class="fas fa-bars"></i>
+</button>
+
+<div id="navcontainer" class="hidden"> 
+    {% if user.is_authenticated %}
+        <p style="margin:0;padding:0;">{{request.user.get_full_name}}</p>
+    {% endif %}
+    <div id="header">
+        <div id="logo" onclick="window.location.href='/'">CN</div>
+        <h1 class="text-center" onclick="window.location.href='/'">CodeNotes Articles</h1>
+    <div>
+    <ul id="nav">
+        <li id='/' onclick="window.location.href='/'" class="navli"><i class="fas fa-home"></i><p class="lisect">Blog Home</p></li>
+        <li id='/authormenu' onclick="window.location.href='/authormenu'" class="navli"><i class="fas fa-pen"></i><p class="lisect">{% trans "Authors" %}</p></li>
+        <li id='/site_about' onclick="window.location.href='/site_about'" class="navli"><i class="fas fa-users"></i><p class="lisect">{% trans "About" %}</p></li>
+        <li id='/contact' onclick="window.location.href='/contact'" class="navli "><i class="fas fa-comments"></i><p class="lisect">{% trans "Contact Us" %}</p></li>
+
+        <li id='/register' onclick="window.location.href='/register'" class="navli"><i class="fas fa-user-plus"></i><p class="lisect">{% trans "Register" %}</p></li>
+        <li id='/login' onclick="window.location.href='/login'" class="navli"><i class="fas fa-sign-in-alt"></i><p class="lisect">{% trans "Login" %}</p></li>
+        
+        {% if user.is_staff == True %} <!-- request.user.username == 'admin' -->
+        <li id='/upload_blog' onclick="window.location.href='/upload_blog'" class="navli"><i class="fas fa-blog"></i><p class="lisect">{% trans "Add Blog" %}</p></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <li id='/profile_update' onclick="window.location.href='/profile_update'" class="navli "><i class="fas fa-user-circle"></i><p class="lisect">{% trans "Account" %}</p></li>
+        <li id='/logout' onclick="window.location.href='/logout'" class="navli"><i class="fas fa-sign-out-alt"></i><p class="lisect">{% trans "Logout" %}</p></li>
+        {% endif %}
+    </ul>
+</div>
+
+
+
+</body>
+
+<script>
+// ADD CLASS TO NAVIGATION MENU ACCORDING TO URL:
+$(function() {
+  $('ul li[id="/' + location.pathname.split("/")[1] + '"]').addClass('active');
+});
+
+
+//var currenturl = location.pathname;
+//var currenturl = window.location.pathname;
+//console.log(currenturl)
+
+//var header = document.getElementById("myDIV");
+//var lists = header.getElementsByClassName("navli");
+//for (var i = 0; i < lists.length; i++) {
+//  lists[i].addEventListener("click", function() {
+//  var current = document.getElementsByClassName("active");
+//  current[0].className = current[0].className.replace(" active", "");
+//  this.className += " active";
+//  });
+//}
+
+</script>
+
+<script src="{% static 'JS/navigationN.js' %}"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js'></script>
+	<script  src="{% static 'JS/script.js' %}"></script>
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script  src="{% static 'JS/contact.js' %}"></script>
+
+    {% block script %}
+    {% endblock %}
+
+
+</html>

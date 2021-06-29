@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+  {% block link %}
+	<link rel="stylesheet" href="{% static 'CSS/blog_menu.css' %}">
+  {% endblock %}
+ 
+
+
+
+{% block content %}
+<body>
+	<div class="grid-container authordiv">
+	{% for blog in blogs %}
+	<div class="grid-item" onclick="window.location='{% url 'blog' blog.id %}';" style="background-image: url({{ blog.coverpicture.url }});">
+			<!--
+			{% if blog.coverpicture %}  IF COVER PICTURE ISN'T BLANK 
+			{% else %}  IF COVER PICTURE IS BLANK 
+				<div id="aboutbackground" onclick="window.location='{% url 'blog' blog.id %}';">
+			{% endif %}
+			-->
+		<!-- UP and DOWN BUTTONS -->
+		{% if request.user.is_superuser == True %}
+		<div style="position:absolute; margin:0; top:80px; left:30px;">
+		<a href="{% url 'blog_up' blog.id %}"><img src="{% static 'IMAGE/up.png' %}" style="width:13%;"></a><br><br>
+		<a href="{% url 'blog_down' blog.id %}"><img src="{% static 'IMAGE/down.png' %}" style="width:13%;"></a>
+		</div>
+		{% else %}
+		{% endif %}
+		
+		<div class="aboutletterdiv">
+			<h2 id="aboutletterhead">{{ blog.title }}</h2>
+			<!-- 
+			<div id="aboutletter">{{ blog.letter | safe }}</div>
+			-->
+			<p id="aboutletter3">
+			<!-- 
+			<span style="display:block; position:relative; margin:0; bottom:10px; font-weight:bold;">...</span>
+			-->
+			<i class="fa fa-eye" style=";"aria-hidden="true"></i>{{ blog.visit_num }}
+			<i class="fa fa-heart" style="color:red;" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ blog.like_num }}</span>
+			<i class="fa fa-comments" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ blog.chat_set.count }}</span><br style="">
+			<i class="fa fa-user" aria-hidden="true" style="font-size:13;"></i>&nbsp;<span class="letterp" style="font-size:13;">{{ blog.user.get_full_name }} </span>
+			</p>
+		</div>
+
+			{% if blog.user == request.user or request.user.is_superuser == True %}
+			<!-- if blog.user == request.user or request.user.username == 'admin' -->
+			<!-- In this way admin could update all the blogs but staff user could update only their own blogs; they can not update blogs of others. -->
+			<!-- Another way to do this is if request.user.username == 'admin' -->
+			<!-- Another way to do this is if user.is_staff == True -->
+			
+				<p style="z-index:1; position:absolute; right:20px; bottom:40px;">
+				<a class="buttonlink" href="{% url 'update_blog' blog.id %}">{% trans "Update" %}</a> <br><br>
+				<a class="buttonlink" href="{% url 'update_blog_cover' blog.pk %}">{% trans "Update Cover" %}</a><br><br>
+				<a class="buttonlink" href="{% url 'delete_blog' blog.pk %}">{% trans "Delete" %}</a>
+				</p>
+
+			{% endif %}
+	</div>
+	{% endfor %}
+	</div>
+
+
+</body>
+
+
+
+{% endblock %}

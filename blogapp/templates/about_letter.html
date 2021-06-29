@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% load crispy_forms_tags %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'CSS/blog.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<body id="firstbody2">
+    <div class="letterdiv">
+      <h2 class="letterhead">ABOUT</h2>
+      <div class="letterp">{{about.letter | safe}}</div>
+    </div>
+</body>
+{% endblock %}
+
+

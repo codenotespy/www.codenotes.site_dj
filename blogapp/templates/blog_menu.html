@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+  {% block link %}
+	<link rel="stylesheet" href="{% static 'CSS/gridN.css' %}">
+  {% endblock %}
+
+
+
+
+{% block content %}
+<body id='homebody'>
+
+
+
+
+
+
+
+
+<div class="grid-container">
+
+    <div class="grid-item-searchdiv">
+		<button id="srchbtn" type="submit">
+			<i class="fas fa-search"></i>
+		</button>
+
+		<form method="GET" style="display:inline-block; float:right; margin-right:30px;">
+			<input type="tect" placeholder="Search..." label="Search">
+		</form>
+
+        <div class="tagdiv" >
+            <a href="/"><p class="tagp">ALL</p></a>
+            {% for tag in tags.all %}
+                <a href="{% url 'posts_by_tag' tag.slug %}" ><p class="tagp">{{tag.name}}</p></a>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    {% for blog in blogs %}
+    <div class="grid-item">
+        <a href="#">
+        <span class="gridspn" onclick="window.location='{% url 'blog' blog.id %}';">New</span>
+        <img class="gridimg" src="{{ blog.coverpicture.url }}" onclick="window.location='{% url 'blog' blog.id %}';">
+        <h2 class="gridtitle" onclick="window.location='{% url 'blog' blog.id %}';">{{ blog.title }}</h2>
+        </a>
+
+        <div class="gridpar">
+        {{ blog.letter | safe }}
+        </div>
+
+
+        <div class="grid-indiv">
+            {% for tag in blog.tags.all %}
+            <span class="gridspn2">{{tag.name}}, </span>
+            {% endfor %}
+            <span class="gridspn3">June 16, 2020</span>
+        </div>
+        <!-- <hr> -->
+        <div class="grid-indiv2">
+            <span class="gridspn4">
+            {{ blog.visit_num }} <i class="fas fa-eye"></i>
+            {{ blog.like_num }} <i class="fas fa-heart" style="color:red"></i>
+            {{ blog.chat_set.count }} <i class="fas fa-comments"></i>
+            </span>
+            <span class="gridspn5">by {{ blog.user.get_full_name }}</span>
+        </div>
+
+        
+        <div>
+        {% if request.user.is_superuser == True %}
+            <!-- UP and DOWN BUTTONS -->
+            <a href="{% url 'blog_up' blog.id %}"><img class="arrowp" src="{% static 'IMAGE/up.png' %}"></a>
+            <a href="{% url 'blog_down' blog.id %}"><img class="arrowp" src="{% static 'IMAGE/down.png' %}"></a>
+        {% else %}
+	    {% endif %}
+
+        {% if blog.user == request.user or request.user.is_superuser == True %}
+            <p class="setbtn" onclick="window.location='{% url 'update_blog' blog.id %}'">{% trans "Update" %}</p>
+            <p class="setbtn" onclick="window.location='{% url 'update_blog_cover' blog.pk %}'">{% trans "Cover PIC" %}</p>
+            <p class="delblogclass setbtn" data-deleteurl="{% url 'delete_blog' blog.pk %}">{% trans "Delete" %}</p>
+        {% endif %}
+        </div>
+
+
+    </div>
+    {% endfor %}
+
+
+
+
+
+
+
+	<div class="grid-item-paginate">
+		<div id="pagdiv1">
+			<a class="updwn">Prev</a>
+			<a class="updwn activepk">Next</a>
+		</div>
+
+		<ul id="pagdiv2">
+            <span>Page</span>
+			<li class="activepp">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <div id="usermodalxd">
+        <span id="usermodalclosexd">X</span>
+        <p style="color:a480cc; text-align:center; margin:35px 0 0 0;">Do you really really want to delete your blog my friend?</p>
+        <div style="margin:auto; text-align:center; margin:0;">
+            <h4 id="yepbtnid" class="modelbtnxd">YEP</h4>&nbsp;&nbsp;&nbsp;
+            <h4 id="nopebtnid" class="modelbtnxd">NOPE</h4>
+        </div>
+    </div>
+
+<script>
+
+
+// FOR DELETE BLOG MODAL:
+	const delblogmodal = document.querySelector('#usermodalxd');
+	const delblogbtns = document.querySelectorAll('.delblogclass');
+	const notebtn = document.querySelector('#nopebtnid');
+	const yepbtn = document.querySelector('#yepbtnid');
+	const delmodalclose = document.querySelector('span#usermodalclosexd');
+
+	delmodalclose.addEventListener("click", function() {
+		delblogmodal.style.display = "none";
+	});
+	notebtn.addEventListener("click", function() {
+		delblogmodal.style.display = "none";
+	});
+
+	
+	for (var z, z = 0; z < delblogbtns.length; z++) {
+		// console.log(delblogbtns[z])
+		delblogbtns[z].addEventListener("click", function() {
+			delblogmodal.style.display = 'block';
+
+			var mydelurl = this.dataset.deleteurl
+			document.querySelector('#yepbtnid').addEventListener("click", function() {
+				window.location.href = mydelurl;
+			});
+		});
+	};
+
+</script>
+
+
+
+</body>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

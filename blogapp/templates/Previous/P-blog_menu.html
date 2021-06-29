@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+  {% block link %}
+	<link rel="stylesheet" href="{% static 'CSS/blog_menu.css' %}">
+  {% endblock %}
+ 
+
+
+
+{% block content %}
+<body>
+
+
+	<div class="hero" style="background-image: url({% static 'IMAGE/aboutpic.jfif' %});">
+	  <div class="hero__content">
+		<h1>{% trans "Basic, simple, clear, easy, readable, explicit, better." %}</h1>
+		{% if user.is_authenticated %}
+		{% else %}
+		<a class="btn" href="{% url 'register' %}">{% trans "Sign up" %}</a>&nbsp;&nbsp;
+		<a class="btn" href="{% url 'login' %}">{% trans "Sign in" %}</a>
+		{% endif %}
+	  </div>
+	</div>
+
+
+
+		<div id="usermodal">
+			<span id="usermodalclose">X</span>
+			<p style="color:a480cc; text-align:center;">What would you like to know about him/her?</p>
+			<div style="margin:auto; text-align:center;">
+				<h4 id="biobtn" class="modelbtn">BIOGRAPHY</h4>&nbsp;&nbsp;&nbsp;
+				<h4 id="blogbtn" class="modelbtn">BLOGS</h4>
+			</div>
+		</div>
+
+		<div id="usermodalxd">
+			<span id="usermodalclosexd">X</span>
+			<p style="color:a480cc; text-align:center; margin:35px 0 0 0;">Do you really really want to delete your blog my friend?</p>
+			<div style="margin:auto; text-align:center; margin:0;">
+				<h4 id="yepbtnid" class="modelbtnxd">YEP</h4>&nbsp;&nbsp;&nbsp;
+				<h4 id="nopebtnid" class="modelbtnxd">NOPE</h4>
+			</div>
+		</div>
+
+
+
+		<div id="authtagdiv">
+			<h3 style="color:#c3c3c3; margin:20px 0 0 0">AUTOHORS:</h3>
+			<div id="atdiv">
+				{% for user in blognum %}
+					<p class="userdata" data-blogurl="{% url 'blogsforuser' user.id %}" data-biourl="{% url 'bioforuser' user.id %}">{{user.get_full_name}} ({{user.total_posts}})</p>
+				{% endfor %}
+			</div>
+
+			<h3 style="color:#c3c3c3;margin:0">TAGS:</h3>
+			<div id="atdiv">
+				<a href="/"><p class="tagclass">ALL</p></a>
+				{% for tag in tags.all %}
+					<a href="{% url 'posts_by_tag' tag.slug %}" ><p class="tagclass" >{{tag.name}}</p></a>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="grid-container">
+		{% for blog in blogs %}
+		<div class="grid-item" style="background-image: url({{ blog.coverpicture.url }});">
+				<!-- 
+				{% if blog.coverpicture %}  IF COVER PICTURE ISN'T BLANK 
+				{% else %}  IF COVER PICTURE IS BLANK 
+					<div id="aboutbackground" onclick="window.location='{% url 'blog' blog.id %}';">
+				{% endif %}
+				-->
+			<!-- UP and DOWN BUTTONS -->
+			{% if request.user.is_superuser == True %}
+			<div class="priorityclass">
+			<a href="{% url 'blog_up' blog.id %}"><img src="{% static 'IMAGE/up.png' %}"></a><br><br>
+			<a href="{% url 'blog_down' blog.id %}"><img src="{% static 'IMAGE/down.png' %}"></a>
+			</div>
+			{% else %}
+			{% endif %}
+			
+			<div class="aboutletterdiv" onclick="window.location='{% url 'blog' blog.id %}';">
+				<h2 id="aboutletterhead">{{ blog.title }}</h2>
+
+				<!-- 
+				<div id="aboutletter">{{ blog.letter | safe }}</div>
+				-->
+				<p id="aboutletter3">
+				<!-- 
+				<span style="display:block; position:relative; margin:0; bottom:10px; font-weight:bold;">...</span>
+				-->
+				<i class="fa fa-eye" style=";"aria-hidden="true"></i>{{ blog.visit_num }}
+				<i class="fa fa-heart" style="color:red;" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ blog.like_num }}</span>
+				<i class="fa fa-comments" aria-hidden="true"></i>&nbsp;<span class="letterp">{{ blog.chat_set.count }}</span><br style="">
+				<i class="fa fa-user" aria-hidden="true" style="font-size:13;"></i>&nbsp;<span class="letterp" style="font-size:13;">{{ blog.user.get_full_name }} </span>
+				</p>
+			</div>
+
+				<ul class="tagdivu">
+					{% for tag in blog.tags.all %}
+						<li><a class="tagclass" href="{% url 'posts_by_tag' tag.slug %}">{{tag.name}}</a></li>
+					{% endfor %}
+				</ul>
+
+				{% if blog.user == request.user or request.user.is_superuser == True %}
+				<!-- if blog.user == request.user or request.user.username == 'admin' -->
+				<!-- In this way admin could update all the blogs but staff user could update only their own blogs; they can not update blogs of others. -->
+				<!-- Another way to do this is if request.user.username == 'admin' -->
+				<!-- Another way to do this is if user.is_staff == True -->
+
+					<p class="btnsdivforuser">
+					<a class="buttonlink" href="{% url 'update_blog' blog.id %}">{% trans "Update" %}</a> <br><br>
+					<a class="buttonlink" href="{% url 'update_blog_cover' blog.pk %}">{% trans "Cover PIC" %}</a><br><br>
+					<a class="delblogclass buttonlink" data-deleteurl="{% url 'delete_blog' blog.pk %}">{% trans "Delete" %}</a>
+					</p>
+					
+
+				{% endif %}
+		</div>
+		{% endfor %}
+		</div>
+
+
+
+<script>
+	const myusermodal = document.querySelector('div#usermodal');
+//	const myusermodal = document.getElementById('usermodal')
+	const usermodalclose = document.querySelector('span#usermodalclose');
+//	const usermodalclose = document.getElementById('usermodalclose')
+	const bio = document.querySelectorAll('p.userdata');
+
+	for (var k, k = 0; k < bio.length; k++) {
+		bio[k].addEventListener("click", function() {
+			myusermodal.style.display = 'block';
+			//	myusermodal.classList.remove('hide')
+			// console.log(this.dataset.biourl);
+
+			var mybiourl = this.dataset.biourl
+			document.querySelector('#biobtn').addEventListener("click", function() {
+				window.location.href = mybiourl;
+			});
+			
+			var myblogurl = this.dataset.blogurl
+			document.querySelector('#blogbtn').addEventListener("click", function() {
+				window.location.href = myblogurl;
+			});
+		});
+		//const biourl = bio[k].dataset.biourl;
+		//console.log(biourl)
+	};
+
+	usermodalclose.addEventListener("click", function() {
+    	myusermodal.style.display = 'none';
+//		document.getElementById('usermodal').classList.add('hide');
+//		myusermodalxd.setAttribute("style", "display:none");
+	});
+
+
+
+
+
+
+
+
+
+// FOR DELETE BLOG MODAL:
+	const delblogmodal = document.querySelector('#usermodalxd');
+	const delblogbtns = document.querySelectorAll('.delblogclass');
+	const notebtn = document.querySelector('#nopebtnid');
+	const yepbtn = document.querySelector('#yepbtnid');
+	const delmodalclose = document.querySelector('span#usermodalclosexd');
+
+	delmodalclose.addEventListener("click", function() {
+		delblogmodal.style.display = "none";
+	});
+	notebtn.addEventListener("click", function() {
+		delblogmodal.style.display = "none";
+	});
+
+	
+	for (var z, z = 0; z < delblogbtns.length; z++) {
+		// console.log(delblogbtns[z])
+		delblogbtns[z].addEventListener("click", function() {
+			delblogmodal.style.display = 'block';
+
+			var mydelurl = this.dataset.deleteurl
+			document.querySelector('#yepbtnid').addEventListener("click", function() {
+				window.location.href = mydelurl;
+			});
+		});
+	};
+
+</script>
+
+</body>
+
+
+
+
+
+
+
+{% endblock %}

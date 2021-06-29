@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% load crispy_forms_tags %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'CSS/blog.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<body id="firstbody2">
+
+<style>
+.tagclass {
+	display:inline-block; 
+	padding:10px; 
+	background-color:#c3c3c3; 
+	color:white; 
+	border:2px solid pink; 
+	border-radius:15px;
+  text-decoration: none;
+}
+
+.tagclass:hover {
+	background-color:powderblue;
+}
+</style>
+
+    <div class="letterdiv">
+		<h2 class="letterhead"><img style="max-width:200px; max-height:200px; vertical-align: middle;" src="{{mybio.profilepicture.url}}"> {{mybio.user.get_full_name}}, {{mybio.title}} , {{mybio.location}}</h2><br>
+    <a href="{% url 'blogsforuser' mybio.user_id %}" class="tagclass">ARTICLES</a>
+		<div class="letterp">{{mybio.bio | safe}}</div>
+    </div>
+</body>
+{% endblock %}
+
+

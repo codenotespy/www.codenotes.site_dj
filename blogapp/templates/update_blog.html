@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+  {% block link %}
+	<style>
+		.updateform {
+			text-align:center;
+			margin: 2em 0 0 0;
+		}
+		
+		@media (max-width: 1150px) {
+			.updateform {
+				margin: 7em 0 0 0;
+			}
+		}
+	</style>
+  {% endblock %}
+
+
+
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<body style="background-color:lightgray;">
+
+  <form class="updateform" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+<!--    <button type="submit" >CONFIRM</button> -->
+  </form>
+
+{% else %}
+    <h1>Welcome</h1>
+    <h2>Please login <a href="/login/">here</a></h2>
+{% endif %}
+
+<body>
+
+
+
+
+
+{% block script %}
+	<script src="http://127.0.0.1:8000/static/ckeditor/ckeditor/ckeditor.js"></script> 
+{% endblock %}
+
+
+
+
+
+
+
+
+{% endblock %}
